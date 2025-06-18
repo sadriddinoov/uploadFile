@@ -18,47 +18,14 @@
 - JWT autentifikatsiya
 - Celery (avtomatik o'chirish uchun)
 
-## O'rnatish
-
-1. Loyihani yuklab oling:
-```bash
-git clone <repository-url>
-cd fileshare
-```
-
-2. Virtual muhitni yarating va faollashtiring:
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac uchun
-# yoki
-venv\Scripts\activate  # Windows uchun
-```
-
-3. Kerakli kutubxonalarni o'rnating:
-```bash
-pip install -r requirements.txt
-```
-
-4. Ma'lumotlar bazasini sozlang:
-```bash
-python manage.py migrate
-```
-
-5. Superuser yarating:
-```bash
-python manage.py createsuperuser
-```
-
-6. Dasturni ishga tushiring:
-```bash
-python manage.py runserver
-```
-
 ## API Endpointlar
 
 ### Autentifikatsiya
-- `POST /api/token/` - JWT token olish
-- `POST /api/token/refresh/` - Token yangilash
+- `POST /auth/signup/` - User registratsiya qilish
+- `POST /auth/login/` - User login qilish
+- `POST /auth/verify-otp/` - User akkauntini tasdiqlash
+- `PUT /auth/update-password/` - User parolini almashtirish
+- `POST /auth/reset-password/` - User parolini qayta ornatish
 
 ### Fayllar
 - `POST /api/files/` - Yangi fayl yuklash
