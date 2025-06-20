@@ -5,10 +5,11 @@ from .models import OTP
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
     class Meta:
         model = User
-        fields = ('username', 'phone_number')
-        read_only_fields = ('password',)
+        fields = ('username', 'phone_number', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
 class OTPSerializer(serializers.ModelSerializer):
     class Meta:

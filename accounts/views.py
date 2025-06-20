@@ -92,7 +92,7 @@ def verify_otp(request):
         return Response({"error": "OTP topilmadi"}, status=status.HTTP_404_NOT_FOUND)
     if int(otp.code) != int(data['otp_code']):
         return Response({"error": "OTP noto'g'ri"}, status=status.HTTP_400_BAD_REQUEST)
-    if timezone.now() - otp.created_at > timedelta(seconds=60):
+    if timezone.now() - otp.created_at > timedelta(seconds=180):
         return Response(data={"error": "Sizning OTP vaqtingiz tugadi, iltimos yangi so'rov bering!"}, status=status.HTTP_400_BAD_REQUEST)
     otp.user.is_verify = True
     otp.user.save()

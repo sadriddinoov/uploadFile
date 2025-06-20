@@ -26,12 +26,13 @@ SECRET_KEY = 'django-insecure-f@0pjvk@r&rhny(c6l_w5(#xui5ky49@h4g^(c84h2u=_ah3^h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -153,3 +154,28 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'accounts.User'
+
+JAZZMIN_SETTINGS = {
+    "site_title": "FileShare Admin",
+    "site_header": "FileShare Boshqaruv",
+    "site_brand": "FileShare",
+    "welcome_sign": "Xush kelibsiz, FileShare boshqaruv paneliga!",
+    "copyright": "FileShare Team",
+    "search_model": ["accounts.User", "uploads.File"],
+    "user_avatar": None,
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["accounts", "uploads"],
+    "custom_links": {},
+    "icons": {
+        "accounts.User": "fas fa-user",
+        "uploads.File": "fas fa-file-upload",
+        "uploads.FileAccessLog": "fas fa-history",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    "related_modal_active": True,
+    "language_chooser": False,
+}
