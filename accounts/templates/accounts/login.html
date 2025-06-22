@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="text-align: center;">Kirish</h2>
+<form method="post" style="max-width:400px;margin:auto;">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <input type="text" name="username" required placeholder="Username" style="margin-bottom:14px;width:100%;padding:12px;border-radius:8px;border:1.5px solid #e5e7eb;font-size:1.08rem;">
+    <input type="password" name="password" required placeholder="Parol" style="margin-bottom:18px;width:100%;padding:12px;border-radius:8px;border:1.5px solid #e5e7eb;font-size:1.08rem;">
+    <input type="submit" value="Kirish" style="width:100%;margin-bottom:10px;">
+</form>
+<div style="text-align:center;margin-top:18px;">
+  <span style="color:#64748b;">Akkaunt yaratmagansizmi?</span>
+  <a href="{% url 'web_register' %}" style="color:#2563eb;text-decoration:underline;font-weight:500;">Ro'yxatdan o'tish</a>
+</div>
+{% if error %}
+  <div class="error" style="margin-top:18px; text-align: center;">{{ error }}</div>
+{% endif %}
+{% if refresh and access %}
+  <div class="success" style="margin-top:18px;">
+    <b>Refresh token:</b> {{ refresh }}<br>
+    <b>Access token:</b> {{ access }}
+  </div>
+{% endif %}
+{% if otp_key and otp_code %}
+  <div class="success" style="margin-top:18px;">
+    <b>OTP kaliti:</b> {{ otp_key }}<br>
+    <b>OTP kodi:</b> {{ otp_code }}
+  </div>
+{% endif %}
+
+{% endblock %} 

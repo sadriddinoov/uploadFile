@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="success" style="background:#dcfce7; color:#166534; border-radius:12px; padding:18px 20px; margin-bottom:28px; font-size:1.13rem; box-shadow:0 2px 12px #22c55e44;">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+<h2>Mening fayllarim</h2>
+<div style="display:flex; flex-direction:column; gap:32px;">
+  {% for file in files %}
+  <div style="background:#f3f4f6; border-radius:16px; box-shadow:0 2px 12px #6366f122; padding:28px 24px 18px 24px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div style="font-size:1.18rem; font-weight:700; color:#6366f1; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.5rem;">📄</span> {{ file.file.name|cut:'files/' }}
+      </div>
+      <a class="action-link" style="font-size:1.08rem; padding:8px 18px; border-radius:8px; background:#6366f1; color:#fff; text-decoration:none; font-weight:600; transition:background 0.18s;" href="/web/file/{{ file.link }}/">Olish</a>
+    </div>
+    <div style="margin-top:14px; color:#6b7280; font-size:1.01rem;">
+      Yuklangan: <b>{{ file.created_at|date:'d.m.Y H:i' }}</b>
+      Amal qilish muddati: <b>{{ file.expires_at|date:'d.m.Y H:i' }}</b>
+    </div>
+    <div style="margin-top:18px;">
+      <details style="background:#fff; border-radius:10px; padding:10px 16px;">
+        <summary style="outline:none; font-weight:600; color:#6366f1; font-size:1.07rem; cursor:pointer;">👁️ Kirish loglari ({{ file.access_logs.count }})</summary>
+        {% if file.access_logs.all %}
+        <ul style="margin:10px 0 0 0; padding-left:0; list-style:none;">
+          {% for log in file.access_logs.all %}
+            <li style="margin-bottom:8px; color:#22223b; font-size:0.99em; background:#f3f4f6; border-radius:6px; padding:7px 12px;">
+              <span style="color:#6366f1; font-weight:600;">{{ log.log_at|date:'d.m.Y H:i' }}</span> — <span style="color:#64748b;">{{ log.ip_address }}</span> — <span style="color:#64748b;">{{ log.user_agent }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <span style="color:#a1a1aa;">Kirishlar yo'q</span>
+        {% endif %}
+      </details>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<a class="action-link" style="display:inline-block;margin-top:36px;font-size:1.15rem;" href="{% url 'upload_file_page' %}">+ Yangi fayl yuklash</a>
+{% endblock %} 

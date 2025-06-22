@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login as django_login, logout
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -12,6 +12,8 @@ from django.utils import timezone
 from datetime import timedelta
 from rest_framework_simplejwt.tokens import RefreshToken
 from drf_yasg import openapi
+from django.shortcuts import render, redirect
+import requests
 
 
 User = get_user_model()
@@ -235,3 +237,72 @@ def reset_password(request):
     otp_code = randint(100000, 999999)
     OTP.objects.create(user=user, code=otp_code)
     return Response({"message": "Parol tiklash uchun OTP yuborildi", "otp": otp_code}, status=status.HTTP_200_OK)
+
+
+
+def register_view(request):
+    context = {}
+    if request.method == 'POST':
+        phone = request.POST.get('phone')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        data = {'phone': phone, 'username': username, 'password': password}
+        api_url = request.build_absolute_uri('/auth/signup/')
+        resp = requests.post(api_url, json=data)
+        if User.objects.filter(phone_number=phone, is_verify=True).exists():
+            return Response({'error': 'Bu nomer bilan tasdiqlangan akkaunt mavjud'}, status=400)
+        if resp.status_code == 201:
+            result = resp.json()
+            otp_key = result.get('otp_key')
+            otp_code = result.get('otp_code')
+            return redirect(f'/auth/web-verify/?otp_key={otp_key}&otp_code={otp_code}')
+        else:
+            try:
+                context['error'] = resp.json()
+            except Exception:
+                context['error'] = resp.text
+    return render(request, 'accounts/register.html', context)
+
+def verify_view(request):
+    error = None
+    otp_key = request.GET.get('otp_key') or request.POST.get('otp_key')
+    otp_code = request.GET.get('otp_code')
+    if request.method == 'POST':
+        otp_code = request.POST.get('otp_code')
+        from .models import OTP
+        otp = OTP.objects.filter(key=otp_key).first()
+        if not otp:
+            error = 'OTP topilmadi.'
+        elif str(otp.code) != str(otp_code):
+            error = "OTP noto'g'ri."
+        else:
+            user = otp.user
+            user.is_verify = True
+            user.save()
+            otp.delete()
+            return redirect('web_login')
+    return render(request, 'accounts/verify.html', {'otp_key': otp_key, 'otp_code': otp_code, 'error': error})
+
+def login_view(request):
+    context = {}
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        data = {'username': username, 'password': password}
+        api_url = request.build_absolute_uri('/auth/login/')
+        resp = requests.post(api_url, json=data)
+        if resp.status_code == 200:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                django_login(request, user)
+                return redirect('my_files_page')
+        else:
+            try:
+                context['error'] = resp.json()
+            except Exception:
+                context['error'] = resp.text
+    return render(request, 'accounts/login.html', context)
+
+def logout_view(request):
+    logout(request)
+    return redirect('web_login')

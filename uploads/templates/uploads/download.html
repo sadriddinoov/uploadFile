@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if error %}
+  <div class="error" style="background:#fee2e2; color:#b91c1c; border-radius:12px; padding:22px 20px; margin-bottom:32px; font-size:1.13rem; box-shadow:0 2px 12px #f8717188;">{{ error }}</div>
+{% elif file %}
+  <div style="max-width:480px; margin:auto; background:#f3f4f6; border-radius:16px; box-shadow:0 2px 12px #6366f122; padding:38px 32px 32px 32px;">
+    <h2 style="margin-top:0;">Fayl: {{ file.file.name|cut:'files/' }}</h2>
+    <form method="post" style="margin-bottom:24px;">
+      {% csrf_token %}
+      <input type="submit" value="Yuklab olish" style="width:100%; max-width:260px;">
+    </form>
+  </div>
+{% endif %}
+<a class="action-link" style="display:inline-block;margin-top:36px;font-size:1.13rem;" href="/web/my-files/">Mening fayllarimga qaytish</a>
+{% endblock %} 
