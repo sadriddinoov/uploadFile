@@ -179,3 +179,18 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": True,
     "language_chooser": False,
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'JWT format: Bearer <token>',
+        }
+    },
+    'USE_SESSION_AUTH': False,
+}
+
+TELEGRAM_BOT_TOKEN = '7621167032:AAEkCffBsk6wy-GaBLpnfFS8aH5AawlvFF8'
+TELEGRAM_ADMIN_USER_ID = 1442635843

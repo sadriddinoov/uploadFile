@@ -115,6 +115,7 @@
                       <button id="nav-profile-btn" style="background:none; border:none; color:white; font-weight:600; cursor:pointer; padding:0 10px;">{{ user.username }} &#x25BC;</button>
                       <div id="nav-profile-menu" style="display:none;position:absolute;top:120%;right:0;background:#fff;border-radius:10px;box-shadow:0 2px 12px #6366f122;padding:0;min-width:140px;z-index:10;">
                         <a href="{% url 'logout' %}" style="display:block; padding:12px; color:#ef4444; text-decoration:none; font-weight:600; border-radius:10px; text-align: center;">Chiqish</a>
+                        <a href="{% url 'web_update_password' %}" style="display:block; padding:12px; color:#2563eb; text-decoration:none; font-weight:600; border-radius:10px; text-align: center;">Parolni o'zgartirish</a>
                       </div>
                     </div>
                 {% else %}

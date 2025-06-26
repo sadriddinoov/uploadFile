@@ -142,7 +142,7 @@ def download_file_page(request, link):
     already_used = request.COOKIES.get(cookie_name, None)
 
     if already_used:
-        return render(request, 'uploads/download.html', {'error': 'Bu faylga ushbu qurilmadan faqat bir marta kirish mumkin (link ishlatilgan).'})
+        return render(request, 'uploads/download.html', {'error': 'Bu faylga shu qurilmadan faqat bir marta kirish mumkin (link ishlatilgan)'})
 
     if request.method == 'POST':
         ip = request.META.get('REMOTE_ADDR')

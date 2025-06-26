@@ -12,6 +12,9 @@
   <span style="color:#64748b;">Akkaunt yaratmagansizmi?</span>
   <a href="{% url 'web_register' %}" style="color:#2563eb;text-decoration:underline;font-weight:500;">Ro'yxatdan o'tish</a>
 </div>
+<div style="text-align:center;margin-top:10px;">
+  <a href="{% url 'web_forgot_password' %}" style="color:#2563eb;text-decoration:underline;font-weight:500;">Parolni unutdingizmi?</a>
+</div>
 {% if error %}
   <div class="error" style="margin-top:18px; text-align: center;">{{ error }}</div>
 {% endif %}

@@ -20,18 +20,39 @@
 
 ## API Endpointlar
 
-### Autentifikatsiya
-- `POST /auth/signup/` - User registratsiya qilish
-- `POST /auth/login/` - User login qilish
-- `POST /auth/verify-otp/` - User akkauntini tasdiqlash
-- `PUT /auth/update-password/` - User parolini almashtirish
-- `POST /auth/reset-password/` - User parolini qayta ornatish
+### Autentifikatsiya (Auth)
+- `POST /auth/signup/` — Foydalanuvchini ro'yxatdan o'tkazish (telefon va parol)
+- `POST /auth/login/` — Login (username yoki telefon va parol)
+- `POST /auth/verify-otp/` — OTP orqali akkauntni tasdiqlash
+- `POST /auth/resend-otp/` — OTP kodini qayta yuborish
+- `PATCH /auth/update-password/` — Parolni yangilash (eski va yangi parol)
+- `POST /auth/reset-password/` — Parolni tiklash uchun OTP yuborish (telefon)
+- `POST /auth/confirm-reset-password/` — OTP va yangi parol orqali parolni tiklash
 
-### Fayllar
-- `POST /api/files/` - Yangi fayl yuklash
-- `GET /api/files/` - Fayllar ro'yxatini ko'rish
-- `GET /api/files/{id}/` - Fayl haqida ma'lumot
-- `POST /api/files/{id}/generate-link/` - Yangi link yaratish
-- `GET /api/files/{id}/download/` - Faylni yuklab olish
-- `GET /api/files/{id}/stats/` - Fayl statistikasi
+### Fayllar (Files)
+- `POST /file/` — Yangi fayl yuklash (expire_hours bilan)
+- `GET /file/<link>/` — Faylni unikal link orqali yuklab olish
+- `GET /my-files/` — Foydalanuvchining barcha fayllari va loglari
+
+### Web Endpoints (foydalanuvchi interfeysi)
+- `/auth/web-register/` — Web orqali ro'yxatdan o'tish
+- `/auth/web-login/` — Web orqali login
+- `/auth/web-verify/` — Web orqali OTP tasdiqlash
+- `/auth/web-update-password/` — Web orqali parolni o'zgartirish
+- `/auth/web-forgot-password/` — Web orqali parolni tiklash (telefon)
+- `/auth/web-confirm-reset-password/` — Web orqali OTP va yangi parol kiritish
+
+**Fayllar uchun web:**
+- `/web/upload/` — Fayl yuklash sahifasi
+- `/web/my-files/` — Mening fayllarim (fayllar ro'yxati va loglari)
+- `/web/file/<link>/` — Faylni ko'rish va yuklab olish (unikal link orqali)
+
+### Qo'shimcha
+- Barcha OTP kodlar Telegramga yuboriladi (web va API uchun)
+- Swagger dokumentatsiya: `/swagger/`
+- JWT orqali autentifikatsiya (Bearer token)
+
+**Swagger uchun:**
+- Avtorizatsiya: Bearer `<access_token>`
+- Barcha endpointlar uchun Uzbek tilida javoblar va xatoliklar
 

@@ -21,6 +21,10 @@
       Yuklangan: <b>{{ file.created_at|date:'d.m.Y H:i' }}</b>
       Amal qilish muddati: <b>{{ file.expires_at|date:'d.m.Y H:i' }}</b>
     </div>
+    <div style="margin-top:10px;">
+      <span style="color:#6366f1; font-size:0.98rem; font-weight:600;">🔗 Fayl korish uchun link:</span>
+      <input type="text" value="{{ request.scheme }}://{{ request.get_host }}/web/file/{{ file.link }}/" readonly style="width:70%;padding:6px 10px;border-radius:6px;border:1px solid #d1d5db;font-size:0.98rem;margin-left:8px;" onclick="this.select();document.execCommand('copy');" title="Nusxalash uchun bosing">
+    </div>
     <div style="margin-top:18px;">
       <details style="background:#fff; border-radius:10px; padding:10px 16px;">
         <summary style="outline:none; font-weight:600; color:#6366f1; font-size:1.07rem; cursor:pointer;">👁️ Kirish loglari ({{ file.access_logs.count }})</summary>
@@ -40,5 +44,5 @@
   </div>
   {% endfor %}
 </div>
-<a class="action-link" style="display:inline-block;margin-top:36px;font-size:1.15rem;" href="{% url 'upload_file_page' %}">+ Yangi fayl yuklash</a>
+<a class="action-link" style="display:inline-block;margin-top:36px;font-size:1.15rem;" href="{% url 'upload_file_page' %}">+ Yengi fayl yuklash</a>
 {% endblock %} 
